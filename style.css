@@ -1,0 +1,244 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #eef3f9, #f8fbff);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 10px 50px 30px;
+    transition: all 0.3s ease;
+}
+
+h1 {
+    text-align: center;
+    color: #2563eb;
+    font-size: 1.7rem;
+    margin-bottom: 30px;
+}
+
+.controls {
+    justify-content: center;
+
+    margin: 20px 0;
+}
+
+#valueInput,
+.treeTypeCom {
+    padding: 8px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9fafb;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: border 0.3s;
+    margin-top: 10px;
+}
+
+#valueInput:focus,
+.treeTypeCom:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+}
+
+
+
+button {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    transition: all 0.25s ease;
+}
+
+button:hover {
+    background: #1e40af;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+#treeContainer {
+    min-height: 350px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #f1f5f9;
+    border-radius: 12px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.node {
+    display: inline-block;
+    background: #dbeafe;
+    border: 2px solid #2563eb;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    color: #2563eb;
+    position: relative;
+    transition: transform 0.3s, background 0.3s, border 0.3s;
+    z-index: 1;
+    user-select: none;
+}
+
+.node.found {
+    background: #22c55e;
+    color: #ffffff;
+    border-color: #15803d;
+    transform: scale(1.15);
+}
+
+.node.notfound {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #991b1b;
+    transform: scale(1.15);
+}
+
+.edge {
+    width: 2px;
+    background: #2563eb;
+    transition: background 0.3s;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background: #ffffff;
+    margin: 10% auto;
+    padding: 30px 40px;
+    font-size: 20px;
+    border-radius: 12px;
+    width: 360px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.close {
+    color: #888;
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ef4444;
+}
+
+#description_Tree{
+    font-size: 16px;
+    color: #374151;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+/* ---------- KEYFRAMES ---------- */
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(34, 197, 94, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+@keyframes shakeX {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-6px);
+    }
+
+    50% {
+        transform: translateX(6px);
+    }
+
+    75% {
+        transform: translateX(-4px);
+    }
+}
+
+/* ---------- ANIMATION CLASSES ---------- */
+.node.adding {
+    animation: popIn 0.35s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.node.found {
+    animation: pulseGlow 1.2s ease-out infinite;
+}
+
+.node.notfound {
+    animation: shakeX 0.45s ease-in-out 2;
+}
+
+/* ====== Cạnh vẽ “tuôn ra” ====== */
+.edge {
+    position: absolute;
+    height: 2px;
+    background: #2563eb;
+    transform-origin: 0 0;
+    /* quay quanh gốc trái‑trên */
+    width: 0;
+    /* bắt đầu 0 px */
+    transition: width .35s ease;
+    /* trượt sang kích‑thước thật */
+}
+
+
