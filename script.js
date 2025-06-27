@@ -549,6 +549,7 @@ function renderTree(tree) {
     container.className = '';              // reset class for new render
     container.style.position = 'relative';
     container.style.height = '400px';
+    const containerWidth = container.clientWidth/2; // center the tree horizontally
 
     if (!tree?.root) return;
 
@@ -621,7 +622,7 @@ function renderTree(tree) {
                     makeEdge(parentCenterX, parentBottomY, childCenterX, childTopY);
                 }
             }
-        })(tree.root, 400, 20, 1);
+        })(tree.root, containerWidth, 20, 1);
         return;
     }
 
@@ -641,7 +642,7 @@ function renderTree(tree) {
         const offset = 80 / Math.pow(1.2, depth);
         renderBinary(node.left, x - offset, y + 70, depth + 1, x, y);
         renderBinary(node.right, x + offset, y + 70, depth + 1, x, y);
-    })(tree.root, 400, 20, 1, null, null);
+    })(tree.root, containerWidth, 20, 1, null, null);
 }
 
 /* ---------- SUPPORT FOR MARKING FOUND/NOT FOUND ---------- */
